@@ -14,6 +14,8 @@ services:
       - "80:80"
     volumes:
       - ./html:/var/www/html
+      - ./apache2/conf/apache2.conf:/etc/apache2/apache2.conf
+      - ./apache2/sites-available:/etc/apache2/sites-available
     networks:
       apache_net:
         ipv4_address: 10.9.0.2
