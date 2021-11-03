@@ -20,7 +20,8 @@ ENV BUILD_DEPS='software-properties-common'
 RUN apt-get install -f -y $BUILD_DEPS
 
 # Installing php5.6
-RUN add-apt-repository -y ppa:ondrej/php \
+RUN apt-get update \
+    && add-apt-repository -y ppa:ondrej/php \
     && apt-get update
 
 RUN apt-get install -y    \
@@ -55,13 +56,18 @@ RUN a2enmod php5.6
 RUN apt-get purge -y --autoremove $BUILD_DEPS \
     && apt-get autoremove -y                  \
     && apt-get clean -y                       \
-    && rm -rfv /var/lib/apt/lists/* 
+    && rm -rfv /var/lib/apt/lists/*           \
+    && rm -rfv /tmp/*
 
 # Forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/apache2/access.log \
-    && ln -sf /dev/stderr /var/log/apache2/error.log
+RUN ln -sfv /dev/stdout /var/log/apache2/access.log \
+    && ln -sfv /dev/stderr /var/log/apache2/error.log
 
-COPY ./html /var/www/html
+# Permanent files
+ENV DIR_VOVO="/var/www/vovo"
+COPY ./html ${DIR_VOVO}/html
+COPY ./apache2/conf ${DIR_VOVO}/conf
+COPY ./apache2/sites-available ${DIR_VOVO}/sites-available
 
 RUN chmod 755 /var/www/html -Rf
 
