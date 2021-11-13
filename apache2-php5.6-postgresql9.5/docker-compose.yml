@@ -19,7 +19,7 @@ services:
         ipv4_address: 10.9.0.2
 
   postgres:
-    container_name: ${POSTGRES_DB}
+    container_name: postgres9.5
     image: postgres:9.5
     restart: always
     environment:
@@ -30,7 +30,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./postgres/${POSTGRES_DB}:/var/lib/postgresql/data/pgdata
+      - ./postgres/pgdata:/var/lib/postgresql/data/pgdata
     networks:
       apache_net:
         ipv4_address: 10.9.0.3
