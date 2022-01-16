@@ -14,3 +14,6 @@ services:
       - "5432:5432"
     volumes:
       - "./data/postgres/pgdata:/var/lib/postgresql/data/pgdata"
+      
+# On my machine, it works!
+# (Vovolinux)
