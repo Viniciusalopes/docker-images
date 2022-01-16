@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  test-database-dev:
-    container_name: postgres13
-    image: postgres:13-alpine
+  postgres-alpine:
+    container_name: postgres-alpine
+    image: vovolinux/postgres-alpine
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
